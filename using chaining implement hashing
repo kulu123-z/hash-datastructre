@@ -1,0 +1,70 @@
+#include<iostream>
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+class Hash{
+    private:
+     int hashSize;
+     
+     list<int> *table;
+     
+    public:
+     Hash(int v){
+        hashSize=v;
+        table = new list<int>[hashSize]; 
+     }
+     
+     void insertitem(int key){
+        int index=hashFun(key);
+        table[index].push_back(key);
+     }
+     
+     void deleteItem(int key){
+        int index=hashFun(key);
+        
+        list<int> :: iterator i;
+        
+        for(i=table[index].begin();i!=table[index].end();i++){
+            if(*i==key){
+                break;
+            }
+        }
+        
+        if(i!=table[index].end()){
+            table[index].erase(i);
+        }
+     }
+     
+     int hashFun(int key){
+         return key%hashSize;
+     }
+     
+     void displayHash(){
+         for(int i=0;i<hashSize;i++){
+             cout<<i;
+             for(auto j:table[i]){
+                 cout<<"-->"<<j;
+             }
+             cout<<endl;
+         }
+     }
+};
+
+int main(){
+    int arr[]={15,11,27,8,12};
+    int sizeOfArray = sizeof(arr)/sizeof(arr[0]);
+    Hash h(7);   // 7 is count of buckets in 
+               // hash table 
+    for (int i = 0; i < sizeOfArray; i++)  
+        h.insertitem(arr[i]);   
+  
+  // delete 12 from hash table 
+  h.deleteItem(12); 
+  
+  // display the Hash table 
+  h.displayHash(); 
+  
+  return 0; 
+}
